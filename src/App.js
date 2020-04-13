@@ -1,26 +1,78 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from 'react';
+import { dbRef } from './Helpers/firebase';
+import Messages from './Components/Messages';
+import Hi from './Components/Hi';
+
+import {
+    HashRouter as Router,
+    Route,
+    Switch,
+    Link
+} from 'react-router-dom';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [messages, setMessages] = useState({});
+
+
+    useEffect(() => {
+        dbRef.on('value', (snapshot) => {
+            const database = snapshot.val();
+            setMessages(database);   
+        })
+    }, [])
+
+
+    return(
+        <Router basename='/'>
+            <h1>Chat App</h1>
+
+            <Link to='/messages'>messages</Link>
+            <Link to='/messages/hi'>hi</Link>
+
+            <Route path='/messages'>
+                <Messages messages={messages} />
+
+                <Route path='/messages/hi'>
+                    <Hi />
+                </Route>
+            </Route>
+
+            <Route render={() => <Hi />} />
+        </Router>
+    )
 }
+
+// class App extends Component{
+//     constructor(){
+//         super();
+//         this.state = {
+//             messages:{},
+//         }
+//     }
+    // componentDidMount(){
+        // dbRef.on('value', (snapshot) => {
+        //     const database = snapshot.val();
+        //     console.log(database)
+        //         this.setState({
+        //             messages: database
+        //         })
+        // })
+    // }
+
+// componentDidUpdate(prevState, prevProps) {
+//     if (prevProps.messages !== this.props.messages) {
+//         // do something when prop value changes
+//     }
+// }
+//         render(){
+//             return(
+//             <div>
+//                 <h1>Chat App</h1>
+//                 <Messages messages={this.state.messages}/>
+//             </div>
+//         )
+//     }
+// }
+
 
 export default App;
