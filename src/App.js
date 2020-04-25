@@ -42,37 +42,5 @@ function App() {
     )
 }
 
-// class App extends Component{
-//     constructor(){
-//         super();
-//         this.state = {
-//             messages:{},
-//         }
-//     }
-    // componentDidMount(){
-        // dbRef.on('value', (snapshot) => {
-        //     const database = snapshot.val();
-        //     console.log(database)
-        //         this.setState({
-        //             messages: database
-        //         })
-        // })
-    // }
-
-// componentDidUpdate(prevState, prevProps) {
-//     if (prevProps.messages !== this.props.messages) {
-//         // do something when prop value changes
-//     }
-// }
-//         render(){
-//             return(
-//             <div>
-//                 <h1>Chat App</h1>
-//                 <Messages messages={this.state.messages}/>
-//             </div>
-//         )
-//     }
-// }
-
 
 export default App;
